@@ -43,8 +43,6 @@ public class Task1_Maths : MonoBehaviour
             //Normalize it.
             Vector2 unitVectorToMousePos = Maths.Normalise(toMousePos);
 
-            //print("NORMALIZE MATHS: " 
-
             //Then find the dot product from the up vector (-1,1).
             float dot = Maths.Dot(Vector2.up, unitVectorToMousePos);
             if (m_DotProduct != null)

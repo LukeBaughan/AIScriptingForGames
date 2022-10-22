@@ -10,7 +10,9 @@ public class SteeringBehaviour_Manager : MonoBehaviour
     public List<SteeringBehaviour> m_SteeringBehaviours;
 
 	private void Awake()
-	{
+    {
+
+        // The entitiy that it is attached to
         m_Entity = GetComponent<MovingEntity>();
 
         if(!m_Entity)
@@ -19,8 +21,14 @@ public class SteeringBehaviour_Manager : MonoBehaviour
 
 	public Vector2 GenerateSteeringForce()
     {
-        //delete me
-        return Vector2.zero;
+        if(m_SteeringBehaviours.Count > 0)
+        {
+            return m_SteeringBehaviours[0].CalculateForce();
+        }
+        else
+        {
+            return Vector2.zero;
+        }
     }
 
     public void EnableExclusive(SteeringBehaviour behaviour)

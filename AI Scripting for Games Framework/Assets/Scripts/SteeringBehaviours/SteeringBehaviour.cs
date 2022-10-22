@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(MovingEntity))]
 public abstract class SteeringBehaviour : MonoBehaviour
 {
+    // Debug Lines
     [Header("Debugs")]
     public bool m_Debug_ShowDebugLines = false;
     public Color m_Debug_DesiredVelocityColour = Color.blue;
@@ -14,15 +15,20 @@ public abstract class SteeringBehaviour : MonoBehaviour
     [Space(10)]
 
     [Header("Settings")]
+    // Should steering behaviour be used in calculations
     public bool m_Active = true;
+    // How strong the force of the behaviour should be
     public float m_Weight = 5;
 
     protected SteeringBehaviour_Manager m_Manager;
+    // Direction AI should be heading in
     protected Vector2 m_DesiredVelocity;
+    // The force after the object's velocity has been considered
     protected Vector2 m_Steering;
 
     private void Awake()
     {
+        // Gets the manager if its attached
         m_Manager = GetComponent<SteeringBehaviour_Manager>();
 
         if (!m_Manager) 
@@ -31,6 +37,7 @@ public abstract class SteeringBehaviour : MonoBehaviour
 
     public abstract Vector2 CalculateForce();
 
+    // Debug Line drawing
     protected virtual void OnDrawGizmosSelected()
     {
         if (Application.isPlaying)
