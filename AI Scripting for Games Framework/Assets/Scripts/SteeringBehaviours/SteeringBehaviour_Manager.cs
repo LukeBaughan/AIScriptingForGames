@@ -21,6 +21,7 @@ public class SteeringBehaviour_Manager : MonoBehaviour
 
 	public Vector2 GenerateSteeringForce()
     {
+        // Returns the force of the first steering behaviour in the list (if the list isn't empty)
         if(m_SteeringBehaviours.Count > 0)
         {
             return m_SteeringBehaviours[0].CalculateForce();
