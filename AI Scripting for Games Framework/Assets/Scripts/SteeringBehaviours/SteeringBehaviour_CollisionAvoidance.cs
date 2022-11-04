@@ -29,7 +29,9 @@ public class SteeringBehaviour_CollisionAvoidance : SteeringBehaviour
 
     public override Vector2 CalculateForce()
     {
-        //delete me
+
+
+
         return Vector2.zero;
     }
 
