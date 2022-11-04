@@ -17,5 +17,6 @@ public class SteeringBehaviour_Seek : SteeringBehaviour
 
         // Returns a unit vector of m_Steering multiplied by however strong the weight is set (in options)
         return Maths.Normalise(m_Steering) * m_Weight;
+
     }
 }

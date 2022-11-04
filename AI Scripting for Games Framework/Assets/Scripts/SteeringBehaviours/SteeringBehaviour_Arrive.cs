@@ -6,6 +6,7 @@ public class SteeringBehaviour_Arrive : SteeringBehaviour
 {
     public Vector2 m_TargetPosition;
     public float m_SlowingRadius; 
+    public float m_WeightLerp = 0.0f; 
 
     public override Vector2 CalculateForce()
     {
@@ -28,6 +29,14 @@ public class SteeringBehaviour_Arrive : SteeringBehaviour
         }
         m_DesiredVelocity = Maths.Normalise(seekPositionVector) * arriveSpeed;
         m_Steering = m_DesiredVelocity - m_Manager.m_Entity.m_Velocity;
+
+        m_Weight = Mathf.Lerp(0.0f, Maths.Magnitude(seekPositionVector), m_WeightLerp);
+        m_WeightLerp += 0.011f;
+
+        //if(Maths.Magnitude(seekPositionVector) < 0.5f)
+        //{
+        //    m_Weight -= Maths.Magnitude(seekPositionVector);
+        //}
 
         return Maths.Normalise(m_Steering) * m_Weight;
 

@@ -29,10 +29,26 @@ public class SteeringBehaviour_CollisionAvoidance : SteeringBehaviour
 
     public override Vector2 CalculateForce()
     {
+        /*
+        m_Steering = Vector2.zero;
+        m_DesiredVelocity = Vector2.zero;
+        // Set a very high value as the for loop will be looking for the feeler collision with the closest distance
+        float closestDistance = 999999.0f;
 
+        for(int i = 0; i < m_Feelers.Length; i++)
+        {
+            RaycastHit2D tempHit = Physics2D.Raycast(transform.position, m_FeelerVectors[i], m_FeelersLength[i], m_FeelerLayerMask.value);
+            print(tempHit.distance);
 
-
+            if (tempHit.distance < closestDistance)
+            {
+                closestDistance = tempHit.distance;
+            }
+        }
+       // print(closestDistance);
+          */
         return Vector2.zero;
+      
     }
 
     void UpdateFeelers()
