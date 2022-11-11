@@ -29,24 +29,44 @@ public class SteeringBehaviour_CollisionAvoidance : SteeringBehaviour
 
     public override Vector2 CalculateForce()
     {
-        /*
+        // Sets the feelers to have the angle and rotation specified in the editor
+        UpdateFeelers();
+
         m_Steering = Vector2.zero;
         m_DesiredVelocity = Vector2.zero;
         // Set a very high value as the for loop will be looking for the feeler collision with the closest distance
         float closestDistance = 999999.0f;
+        Vector2 avoidancePoint = Vector2.zero;
+        bool flee = false;
 
-        for(int i = 0; i < m_Feelers.Length; i++)
+        for (int i = 0; i < m_Feelers.Length; i++)
         {
             RaycastHit2D tempHit = Physics2D.Raycast(transform.position, m_FeelerVectors[i], m_FeelersLength[i], m_FeelerLayerMask.value);
-            print(tempHit.distance);
+            //print(tempHit.distance);
 
             if (tempHit.distance < closestDistance)
             {
                 closestDistance = tempHit.distance;
+                avoidancePoint = tempHit.point;
+                flee = true;
             }
         }
-       // print(closestDistance);
-          */
+        //print(closestDistance);
+
+        // Entity then flees the clossest hit point on the feeler
+        if(flee == true)
+        {
+            // Gets the vector between the entity and the flee target
+            Vector2 fleePositionVector = (new Vector2(transform.position.x, transform.position.y) - avoidancePoint);
+            // Gets the unit vector of the fleePositionVector and multiplies it by the entity's max speed to get the desired velocity
+            m_DesiredVelocity = Maths.Normalise(fleePositionVector) * m_Manager.m_Entity.m_MaxSpeed;
+            // Seek force = desired velocity - current velocity of the entity
+            m_Steering = m_DesiredVelocity - m_Manager.m_Entity.m_Velocity;
+
+            // Returns a unit vector of m_Steering multiplied by the weight (which scales with the flee radius)
+            return Maths.Normalise(m_Steering) * Mathf.Lerp(m_Weight, 0, Mathf.Min(Maths.Magnitude(fleePositionVector))); //, 2.0f) / 2.0f);
+        }
+
         return Vector2.zero;
       
     }

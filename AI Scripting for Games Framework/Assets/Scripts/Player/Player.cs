@@ -61,7 +61,7 @@ public class Player : MovingEntity
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Entity ent = collision.GetComponent<Entity>();
+        Entity ent = collision.gameObject.GetComponent<Entity>();
 
         if (ent)
         {

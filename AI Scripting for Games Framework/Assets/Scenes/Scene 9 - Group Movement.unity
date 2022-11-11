@@ -153,6 +153,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1784411840}
   m_RootOrder: 2
@@ -173,6 +174,7 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+  m_UseDelaunayMesh: 0
 --- !u!483693784 &72308268
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -3372,6 +3374,7 @@ Transform:
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: -26.496511, y: 1.0489943, z: 3.7110262}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -3381,6 +3384,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 1784411840}
     m_Modifications:
     - target: {fileID: 2123130925413106561, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
@@ -3432,6 +3436,7 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
 --- !u!1 &519420028
 GameObject:
@@ -3512,6 +3517,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -3572,6 +3578,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.9311368, y: 4.031913, z: -1.8343033}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -3655,7 +3662,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_CohesionRange: 2
   m_FOV: -0.5
@@ -3675,7 +3682,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_AlignmentRange: 2
   m_FOV: -0.5
@@ -3695,7 +3702,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_SeperationRange: 2
   m_FOV: -0.5
@@ -3715,7 +3722,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 20
   m_PursuingEntity: {fileID: 0}
 --- !u!114 &776341906
@@ -3757,7 +3764,7 @@ MonoBehaviour:
   m_FlipsBasedOnVelocity: 0
 --- !u!95 &776341908
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3770,6 +3777,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -3836,6 +3844,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.54, y: 1.8699999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -3919,7 +3928,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_CohesionRange: 2
   m_FOV: -0.5
@@ -3939,7 +3948,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_AlignmentRange: 2
   m_FOV: -0.5
@@ -3959,7 +3968,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_SeperationRange: 2
   m_FOV: -0.5
@@ -3979,7 +3988,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 20
   m_PursuingEntity: {fileID: 0}
 --- !u!114 &891111654
@@ -4021,7 +4030,7 @@ MonoBehaviour:
   m_FlipsBasedOnVelocity: 0
 --- !u!95 &891111656
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4034,6 +4043,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -4100,6 +4110,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.06, y: -1.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -4132,6 +4143,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1784411840}
   m_RootOrder: 3
@@ -12926,6 +12938,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1784411840}
   m_RootOrder: 1
@@ -12946,6 +12959,7 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+  m_UseDelaunayMesh: 0
 --- !u!483693784 &1274492322
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -13874,7 +13888,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_CohesionRange: 2
   m_FOV: -0.5
@@ -13894,7 +13908,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_AlignmentRange: 2
   m_FOV: -0.5
@@ -13914,7 +13928,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_SeperationRange: 2
   m_FOV: -0.5
@@ -13934,7 +13948,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 20
   m_PursuingEntity: {fileID: 0}
 --- !u!114 &1292612584
@@ -13976,7 +13990,7 @@ MonoBehaviour:
   m_FlipsBasedOnVelocity: 0
 --- !u!95 &1292612586
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -13989,6 +14003,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -14055,6 +14070,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.91, y: -1.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -14138,7 +14154,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_CohesionRange: 2
   m_FOV: -0.5
@@ -14158,7 +14174,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_AlignmentRange: 2
   m_FOV: -0.5
@@ -14178,7 +14194,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_SeperationRange: 2
   m_FOV: -0.5
@@ -14198,7 +14214,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 20
   m_PursuingEntity: {fileID: 0}
 --- !u!114 &1415284210
@@ -14240,7 +14256,7 @@ MonoBehaviour:
   m_FlipsBasedOnVelocity: 0
 --- !u!95 &1415284212
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -14253,6 +14269,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -14319,6 +14336,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.39, y: 1.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -14402,7 +14420,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_CohesionRange: 2
   m_FOV: -0.5
@@ -14422,7 +14440,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_AlignmentRange: 2
   m_FOV: -0.5
@@ -14442,7 +14460,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_SeperationRange: 2
   m_FOV: -0.5
@@ -14462,7 +14480,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 20
   m_PursuingEntity: {fileID: 0}
 --- !u!114 &1440149170
@@ -14504,7 +14522,7 @@ MonoBehaviour:
   m_FlipsBasedOnVelocity: 0
 --- !u!95 &1440149172
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -14517,6 +14535,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -14583,6 +14602,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.15, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -14615,6 +14635,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1784411840}
   m_RootOrder: 0
@@ -15495,6 +15516,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1444091086}
   - {fileID: 1274492320}
@@ -15575,7 +15597,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &8331493857286138129
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -15588,6 +15610,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -15690,7 +15713,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_CohesionRange: 2
   m_FOV: -0.5
@@ -15710,7 +15733,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_SeperationRange: 2
   m_FOV: -0.5
@@ -15730,7 +15753,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 10
   m_AlignmentRange: 2
   m_FOV: -0.5
@@ -15768,7 +15791,7 @@ MonoBehaviour:
   m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
+  m_Active: 0
   m_Weight: 20
   m_PursuingEntity: {fileID: 0}
 --- !u!4 &8331493857286138159
@@ -15781,6 +15804,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4

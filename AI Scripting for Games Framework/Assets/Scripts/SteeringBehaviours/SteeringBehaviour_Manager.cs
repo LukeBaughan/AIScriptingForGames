@@ -45,6 +45,7 @@ public class SteeringBehaviour_Manager : MonoBehaviour
 
         // Returns the combination of all of the steering behaviour forces (capped at maximum force)
         return combinedForce;
+
     }
 
     //// Old GenerateSteeringForce code

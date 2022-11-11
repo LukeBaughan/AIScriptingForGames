@@ -7,7 +7,7 @@ public class Entity : MonoBehaviour
     protected Animator m_Animator;
     protected SpriteRenderer m_Renderer;
     public int m_MaxHealth = 5;
-    float m_CurrentHealth;
+    public float m_CurrentHealth;
     public int m_AttackPower = 2;
 
     protected virtual void Awake()
