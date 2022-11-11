@@ -14,6 +14,13 @@ public static class Maths
     {
         // Calculates the unit vector
         float magnitude = Magnitude(a);
+
+        // Return a vector wit the value (0, 0) to prevent an error when dividing by zero in the next return statement
+        if(magnitude == 0)
+        {
+            return Vector2.zero;
+        }
+
         return new Vector2(a.x/ magnitude, a.y / magnitude);
     }
 
