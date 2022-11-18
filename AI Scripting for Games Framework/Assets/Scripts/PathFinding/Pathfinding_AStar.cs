@@ -42,8 +42,27 @@ public class Pathfinding_AStar : PathFinding
         List<NodeInformation> pathNodes = new List<NodeInformation>();
         List<Vector2> path = new List<Vector2>();
 
-		//drawPath
-		Grid.ResetGridNodeColours();
+        // My Code
+        // g = distance from current node to neighbor node
+        // h = distance from neighbor node to end node
+        // f = total distance = g + h
+        // Use Manhattan for finding g and Euclidean for h
+
+        GridNode currentNode;
+        currentNode = start;
+
+        foreach(GridNode neighborNode in currentNode.Neighbours)
+        {
+            if(neighborNode != null)
+            {
+                openList.Add(new NodeInformation(neighborNode, currentNode, Heuristic_Manhattan(currentNode, neighborNode), Heuristic_Euclidean(neighborNode, end)));
+            }
+        }
+
+        // My Code End
+
+        //drawPath
+        Grid.ResetGridNodeColours();
 
 		foreach (NodeInformation node in closedList)
 		{

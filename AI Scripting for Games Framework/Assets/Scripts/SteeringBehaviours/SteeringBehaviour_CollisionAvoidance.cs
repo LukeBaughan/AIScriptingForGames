@@ -35,7 +35,7 @@ public class SteeringBehaviour_CollisionAvoidance : SteeringBehaviour
         m_Steering = Vector2.zero;
         m_DesiredVelocity = Vector2.zero;
         // Set a very high value as the for loop will be looking for the feeler collision with the closest distance
-        float closestDistance = 999999.0f;
+        float closestDistance = float.MaxValue;
         Vector2 avoidancePoint = Vector2.zero;
         bool flee = false;
 
@@ -64,16 +64,15 @@ public class SteeringBehaviour_CollisionAvoidance : SteeringBehaviour
         // Entity flees if one of the feelers hit a collider
         if(flee == true)
         {
-            //print("TRUE");
+            Debug.Log(gameObject.name, this);
             // Gets the vector between the entity and the flee target
             Vector2 fleePositionVector = (new Vector2(transform.position.x, transform.position.y) - avoidancePoint);
             // Gets the unit vector of the fleePositionVector and multiplies it by the entity's max speed to get the desired velocity
             m_DesiredVelocity = Maths.Normalise(fleePositionVector) * m_Manager.m_Entity.m_MaxSpeed;
             // Seek force = desired velocity - current velocity of the entity
             m_Steering = m_DesiredVelocity - m_Manager.m_Entity.m_Velocity;
-
-            // Returns a unit vector of m_Steering multiplied by the weight (which scales with the flee radius)
-            return Maths.Normalise(m_Steering) * Mathf.Lerp(m_Weight, 0, Mathf.Min(Maths.Magnitude(fleePositionVector), 5.0f) / 5.0f);
+            // Returns a unit vector of m_Steering multiplied by the weight
+            return Maths.Normalise(m_Steering) * m_Weight;
         }
 
         return Vector2.zero;
