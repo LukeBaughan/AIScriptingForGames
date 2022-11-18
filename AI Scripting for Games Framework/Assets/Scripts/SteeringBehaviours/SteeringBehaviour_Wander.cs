@@ -9,7 +9,7 @@ public class SteeringBehaviour_Wander : SteeringBehaviour
     public float m_AngleDisplacement = 2;
 
     Vector2 m_wanderDirection;
-    Vector2 m_wanderPosition;
+    //Vector2 m_wanderPosition;
 
     Vector2 m_CirclePosition;
     Vector2 m_PointOnCircle;
@@ -23,10 +23,10 @@ public class SteeringBehaviour_Wander : SteeringBehaviour
         // 50% chance of adding 180 degrees to make the angle either left or right
         m_Angle = m_Angle + (Random.value < 0.5f ? 0 : Mathf.PI);
 
-        m_PointOnCircle = m_WanderRadius * new Vector2(Mathf.Sin(m_Angle), Mathf.Cos(m_Angle));
+        //m_PointOnCircle = m_WanderRadius * new Vector2(Mathf.Sin(m_Angle), Mathf.Cos(m_Angle));
 
         // Sets the circle's position to be in front of the entity by the value of m_WanderOffset
-        m_CirclePosition = (new Vector2(transform.position.x, transform.position.y) + Maths.Normalise(m_Manager.m_Entity.m_Velocity)) * m_WanderOffset;
+        m_CirclePosition = new Vector2(transform.position.x, transform.position.y) + (Maths.Normalise(m_Manager.m_Entity.m_Velocity) * m_WanderOffset);
         // print(new Vector2(transform.position.x, transform.position.y) + " + " + Maths.Normalise(m_Manager.m_Entity.m_Velocity) + " * " + m_WanderOffset);
         print(m_Manager.m_Entity.m_Velocity);
 
@@ -37,16 +37,16 @@ public class SteeringBehaviour_Wander : SteeringBehaviour
         m_wanderDirection = Maths.Normalise(m_wanderDirection) * m_WanderRadius;
 
         // Sets the wander position to be in the circle
-        m_wanderPosition = transform.position;
-        m_wanderPosition += Maths.Normalise(m_Manager.m_Entity.m_Velocity) * m_WanderOffset; 
-        m_wanderPosition += m_wanderDirection;
+        m_PointOnCircle = transform.position;
+        m_PointOnCircle += Maths.Normalise(m_Manager.m_Entity.m_Velocity) * m_WanderOffset;
+        m_PointOnCircle += m_wanderDirection;
 
         //m_wanderPosition = m_CirclePosition + m_PointOnCircle;
         //print(m_CirclePosition + " + " + m_PointOnCircle);
 
         // Seek code
         // Gets the vector between the entity and the target
-        Vector2 seekPositionVector = m_wanderPosition - new Vector2(transform.position.x, transform.position.y);
+        Vector2 seekPositionVector = m_PointOnCircle - new Vector2(transform.position.x, transform.position.y);
         // Gets the unit vector of the seekPositionVector and multiplies it by the entity's max speed to get the desired velocity
         m_DesiredVelocity = Maths.Normalise(seekPositionVector) * m_Manager.m_Entity.m_MaxSpeed;
         // Seek force = desired velocity - current velocity of the entity

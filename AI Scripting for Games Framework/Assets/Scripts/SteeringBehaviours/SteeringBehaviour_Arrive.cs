@@ -11,8 +11,7 @@ public class SteeringBehaviour_Arrive : SteeringBehaviour
     public override Vector2 CalculateForce()
     {
 
-        float deceleration = 0.5f;
-        float minimumArriveSpeed = 0.3f;
+        float deceleration = 1.0f;
 
         // Gets the vector between the entity and the target
         Vector2 seekPositionVector = m_TargetPosition - new Vector2(transform.position.x, transform.position.y);
@@ -22,12 +21,6 @@ public class SteeringBehaviour_Arrive : SteeringBehaviour
         if (arriveSpeed > m_Manager.m_Entity.m_MaxSpeed)
         {
             arriveSpeed = m_Manager.m_Entity.m_MaxSpeed;
-        }
-
-        // If the arrive speed is too slow, cap it (to prevent the deceleration from taking too long)
-        if(arriveSpeed < minimumArriveSpeed)
-        {
-            arriveSpeed = minimumArriveSpeed;
         }
 
         // Gets the desired velocity by multiplying the target vector by the arrive speed

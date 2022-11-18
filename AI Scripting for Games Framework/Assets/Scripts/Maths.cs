@@ -6,7 +6,7 @@ public static class Maths
 {
     public static float Magnitude(Vector2 a)
     {
-        // Uses the pythagoras theorem to of the vector's x and y values to calculate the magnitude
+        // Uses the pythagoras theorem of the vector's x and y values to calculate the magnitude
         return Mathf.Sqrt((a.x * a.x) + (a.y * a.y));
     }
 
@@ -15,12 +15,13 @@ public static class Maths
         // Calculates the unit vector
         float magnitude = Magnitude(a);
 
-        // Return a vector wit the value (0, 0) to prevent an error when dividing by zero in the next return statement
+        // Return a vector with the value (0, 0) to prevent an error when dividing by zero in the next return statement
         if(magnitude == 0)
         {
             return Vector2.zero;
         }
 
+        // Divide the vectors x and y value by its magnitude
         return new Vector2(a.x/ magnitude, a.y / magnitude);
     }
 

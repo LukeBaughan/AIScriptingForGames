@@ -6,6 +6,7 @@ public class SteeringBehaviour_Seek : SteeringBehaviour
 {
     public Vector2 m_TargetPosition;
 
+
     public override Vector2 CalculateForce()
     {
         // Gets the vector between the entity and the target
