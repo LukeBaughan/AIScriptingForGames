@@ -62,20 +62,22 @@ public abstract class PathFinding
     protected float Heuristic_Manhattan(GridNode start, GridNode end)
     {
         float x, y;
-        // Gets the distance between the two nodes' x and y coordinates
-        x = end.transform.position.x - start.transform.position.x;
-        y = end.transform.position.y - start.transform.position.y;
+        // Gets the distance between the two nodes' x and y coordinates (and makes them positive)
+        x = Mathf.Abs(end.transform.position.x - start.transform.position.x);
+        y = Mathf.Abs(end.transform.position.y - start.transform.position.y);
         // Adds them together to get the manhattan distance
         return x + y;
     }
 
     protected float Heuristic_Euclidean(GridNode start, GridNode end)
     {
-        float x, y;     
+        float x, y;
         // Gets the distance between the two nodes' x and y coordinates
         x = end.transform.position.x - start.transform.position.x;
         y = end.transform.position.y - start.transform.position.y;
         // Uses the pythagorean formula to find the euclidean distance between the two nodes
+        //Debug.Log("X: " + x + ", Y: " + y);
+        //Debug.Log(Mathf.Sqrt((x * x) + (y * y)));
         return Mathf.Sqrt((x * x) + (y * y));
     }
 }

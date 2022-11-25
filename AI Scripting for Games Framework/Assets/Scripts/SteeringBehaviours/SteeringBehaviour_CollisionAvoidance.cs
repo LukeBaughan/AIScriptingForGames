@@ -29,6 +29,7 @@ public class SteeringBehaviour_CollisionAvoidance : SteeringBehaviour
 
     public override Vector2 CalculateForce()
     {
+        //The entity has multiple 'feelers' protruding in front of it (the amount of feelers and the angle of the feelers can be changed in the editor)
         // Sets the feelers to have the angle and rotation specified in the editor
         UpdateFeelers();
 
