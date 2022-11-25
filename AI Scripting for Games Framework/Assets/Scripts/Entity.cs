@@ -31,7 +31,7 @@ public class Entity : MonoBehaviour
     public virtual void TakeDamage(float damage)
 	{
         m_CurrentHealth -= damage;
-
+        Debug.Log(this.name + ": " + m_CurrentHealth);
         if (m_CurrentHealth <= 0)
             PlayDeathAnimation();
 	}

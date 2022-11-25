@@ -13,7 +13,7 @@ public class HealthPickup : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Entity ent = collision.gameObject.GetComponent<Entity>();
-
+        Debug.Log(ent);
         if (ent)
         {
             print("E");

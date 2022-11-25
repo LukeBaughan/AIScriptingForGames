@@ -10,6 +10,14 @@ public class DecisionMakingEntity : MovingEntity
     SteeringBehaviour_Evade m_Evade;
     SteeringBehaviour_Seek m_Seek;
 
+    enum state
+    {
+        pursuePlayer,
+        seekHealth
+    }
+
+    state m_CurrentState;
+
     protected override void Awake()
     {
         base.Awake();
@@ -42,6 +50,8 @@ public class DecisionMakingEntity : MovingEntity
         m_Evade.m_Active = false;
         m_Seek.m_Active = false;
 
+        m_CurrentState = state.pursuePlayer;
+
     }
 
     protected override Vector2 GenerateVelocity()
@@ -52,15 +62,37 @@ public class DecisionMakingEntity : MovingEntity
     // Update is called once per frame
     void Update()
     {
+        if (m_CurrentHealth < (m_MaxHealth * 0.25f))
+        {
+            m_CurrentState = state.seekHealth;
+        }
+        else
+        {
+            m_CurrentState = state.pursuePlayer;
+        }
         // Persues Player
         // If player is aggresive, evade
         // If low on health, seek pickup
-        /*
-         * if(health < x)
-         * {
-         *      m_Seek.m_TargetPosition = closest health pickup;
-         * }
-        */
 
+        // Use a switch statement for different states
+        switch (m_CurrentState)
+        {
+            case state.pursuePlayer:
+                stopAllBehaviours();
+                m_Seek.m_Active = false;
+                m_Pursuit.m_Active = true;
+                break;
+            case state.seekHealth:
+                stopAllBehaviours();
+                //HealthPickup healthPickups = FindObjectOfType<HealthPickup>(); // Expensive?
+                Vector2 healthLocation = new(-5.159f, -5.039f);
+                m_Pursuit.m_Active = false;
+                m_Seek.m_Active = true;
+                m_Seek.m_TargetPosition = healthLocation;
+                break;
+        }
+    }
+    void stopAllBehaviours()
+    {
     }
 }

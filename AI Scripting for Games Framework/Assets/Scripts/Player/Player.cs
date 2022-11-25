@@ -59,6 +59,7 @@ public class Player : MovingEntity
         m_Attacking = false;
 	}
 
+    // Enemy takes damage if it is in the weapon's collider
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Entity ent = collision.gameObject.GetComponent<Entity>();
@@ -69,13 +70,14 @@ public class Player : MovingEntity
         }
     }
 
-	private void OnCollisionEnter2D(Collision2D collision)
+    // Player takes damage if an enemy touches them
+    private void OnCollisionEnter2D(Collision2D collision)
 	{
 		Entity ent = collision.gameObject.GetComponent<Entity>();
 
 		if (ent)
 		{
-			TakeDamage(ent.m_AttackPower);
+			//TakeDamage(ent.m_AttackPower);
 		}
 	}
 
