@@ -47,8 +47,8 @@ public class Pathfinding_AStar : PathFinding
         List<Vector2> path = new List<Vector2>();
 
         // My Code
-        // g = distance from current node to neighbor node
-        // h = distance from neighbor node to end node
+        // g = distance from current node to neighbour node
+        // h = distance from neighbour node to end node
         // f = total distance = g + h
         // Use Manhattan for finding g and Euclidean for h
 
@@ -75,7 +75,7 @@ public class Pathfinding_AStar : PathFinding
 
             bool neighborNodeFound = false;
 
-            // Goes through each neighbor node of the current node (skips the corner neighbors)
+            // Goes through each neighbour node of the current node (skips the corner neighbours)
             for (int i = 0; i < currentNodeInfo.node.Neighbours.Count(); i = i + 2)
             {
                 GridNode neighborNode = currentNodeInfo.node.Neighbours[i];

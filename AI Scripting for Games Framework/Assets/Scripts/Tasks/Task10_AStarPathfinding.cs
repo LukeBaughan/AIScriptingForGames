@@ -35,10 +35,11 @@ public class Task10_AStarPathfinding : MovingEntity
 		if (m_AStar.m_Path.Count == 0)
 		{
 			Rect size = Grid.m_GridSize;
-			float x1 = Random.Range(size.xMin, size.xMax); //-21.93114f; //grid 15		//Random.Range(size.xMin, size.xMax);
-            float y1 = Random.Range(size.yMin, size.yMax);//1.968087f;  //grid 18		//Random.Range(size.yMin, size.yMax);
+			float x1 = 30f;//Random.Range(size.xMin, size.xMax); //-21.93114f; //grid 15		//Random.Range(size.xMin, size.xMax);
+            float y1 = -11.67f;//Random.Range(size.yMin, size.yMax);//1.968087f;  //grid 18		//Random.Range(size.yMin, size.yMax);
 
-			m_AStar.GeneratePath(Grid.GetNodeClosestWalkableToLocation(transform.position), Grid.GetNodeClosestWalkableToLocation(new Vector2(x1, y1)));
+
+            m_AStar.GeneratePath(Grid.GetNodeClosestWalkableToLocation(transform.position), Grid.GetNodeClosestWalkableToLocation(new Vector2(x1, y1)));
 		}
 		else
 		{
