@@ -58,9 +58,10 @@ public class Pathfinding_AStar : PathFinding
         NodeInformation currentNodeInfo = new(start, null, float.MaxValue, Heuristic_Euclidean(start, end));
         openList.Add(currentNodeInfo);
 
-        while (!pathFound)
+        int temp = 0;
+        while (!pathFound) //temp < 100)
         {
-
+            temp++;
             // If the current node is the end node, end the loop
             if(currentNodeInfo.node == end)
             {
@@ -106,6 +107,7 @@ public class Pathfinding_AStar : PathFinding
                     // Add the node info to the open list if it isnt already in the open list or closed list, and if it is a walkable node
                     if (!nodeInOpenList && !nodeInClosedList && neighborNode.m_Walkable == true)
                     {
+                        //NodeInformation neighborNodeInfo = new NodeInformation(neighborNode, currentNodeInfo, currentNodeInfo.gCost + Heuristic_Manhattan(currentNodeInfo.node, neighborNode), Heuristic_Euclidean(neighborNode, end));
                         NodeInformation neighborNodeInfo = new NodeInformation(neighborNode, currentNodeInfo, Heuristic_Manhattan(currentNodeInfo.node, neighborNode), Heuristic_Euclidean(neighborNode, end));
                         openList.Add(neighborNodeInfo);
                         neighborNodeFound = true;

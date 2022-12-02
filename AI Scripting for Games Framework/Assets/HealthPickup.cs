@@ -10,14 +10,23 @@ public class HealthPickup : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Heals the entity to maximum health
         Entity ent = collision.gameObject.GetComponent<Entity>();
+        DecisionMakingEntity entDecision = ent.GetComponent<DecisionMakingEntity>();
+
         Debug.Log(ent);
         if (ent)
         {
-            print("E");
             ent.TakeDamage((ent.m_MaxHealth - ent.m_CurrentHealth) * -1);
+            if(entDecision != null)
+            {
+                entDecision.SetHealthLocated(false);
+            }
+
+            Debug.Log(ent.m_CurrentHealth);
+            this.gameObject.SetActive(false);
         }
     }
 

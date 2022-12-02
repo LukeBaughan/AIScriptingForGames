@@ -13,10 +13,14 @@ public class DecisionMakingEntity : MovingEntity
     enum state
     {
         pursuePlayer,
-        seekHealth
+        seekHealth,
+        evadePlayer
     }
 
     state m_CurrentState;
+
+    HealthPickup m_closestHealthPickup;
+    bool m_HealthLocated = false;
 
     protected override void Awake()
     {
@@ -48,6 +52,7 @@ public class DecisionMakingEntity : MovingEntity
 
         // Only pursuit needs to be active on start since the enemy will be pursuing the player
         m_Evade.m_Active = false;
+
         m_Seek.m_Active = false;
 
         m_CurrentState = state.pursuePlayer;
@@ -62,11 +67,11 @@ public class DecisionMakingEntity : MovingEntity
     // Update is called once per frame
     void Update()
     {
-        if (m_CurrentHealth < (m_MaxHealth * 0.25f))
+        if (m_CurrentHealth < (m_MaxHealth * 0.25f) &&  m_CurrentState != state.evadePlayer)
         {
             m_CurrentState = state.seekHealth;
         }
-        else
+        else if(m_CurrentState != state.evadePlayer)
         {
             m_CurrentState = state.pursuePlayer;
         }
@@ -78,21 +83,65 @@ public class DecisionMakingEntity : MovingEntity
         switch (m_CurrentState)
         {
             case state.pursuePlayer:
-                stopAllBehaviours();
-                m_Seek.m_Active = false;
+                activateBehaviour(state.pursuePlayer);
+                break;
+            case state.seekHealth:
+                if (!m_HealthLocated)
+                {
+                    float closestDistance = float.MaxValue;
+                    HealthPickup[] healthPickups = FindObjectsOfType<HealthPickup>();
+                    if (healthPickups.Length > 0)
+                    {
+                        // Finds the closest health pickup
+                        foreach (HealthPickup healthPickup in healthPickups)
+                        {
+                            float healthDistance = Vector3.Distance(healthPickup.transform.position, transform.position);
+                            if (healthDistance < closestDistance)
+                            {
+                                closestDistance = healthDistance;
+                                m_closestHealthPickup = healthPickup;
+                            }
+                        }
+                        m_HealthLocated = true;
+
+                        activateBehaviour(state.seekHealth);
+                        m_Seek.m_TargetPosition = m_closestHealthPickup.transform.position;
+                    }
+                    else
+                    {
+                        m_CurrentState = state.evadePlayer;
+                    }
+                }
+                break;
+            case state.evadePlayer:
+                activateBehaviour(state.evadePlayer);
+                m_Evade.m_Active = true;
+                break;
+
+        }
+    }
+    void activateBehaviour(state behaviour)
+    {
+        m_Pursuit.m_Active = false;
+        m_Seek.m_Active = false;
+        m_Evade.m_Active = false;
+
+        switch (behaviour)
+        {
+            case state.pursuePlayer:
                 m_Pursuit.m_Active = true;
                 break;
             case state.seekHealth:
-                stopAllBehaviours();
-                //HealthPickup healthPickups = FindObjectOfType<HealthPickup>(); // Expensive?
-                Vector2 healthLocation = new(-5.159f, -5.039f);
-                m_Pursuit.m_Active = false;
                 m_Seek.m_Active = true;
-                m_Seek.m_TargetPosition = healthLocation;
+                break;
+            case state.evadePlayer:
+                m_Evade.m_Active = true;
                 break;
         }
     }
-    void stopAllBehaviours()
+
+    public void SetHealthLocated(bool healhLocated)
     {
+        m_HealthLocated = healhLocated;
     }
 }
