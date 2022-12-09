@@ -40,7 +40,7 @@ public class Task10_AStarPathfinding : MovingEntity
 
 
             m_AStar.GeneratePath(Grid.GetNodeClosestWalkableToLocation(transform.position), Grid.GetNodeClosestWalkableToLocation(new Vector2(x1, y1)));
-		}
+        }
 		else
 		{
 			if (m_AStar.m_Path.Count > 0)

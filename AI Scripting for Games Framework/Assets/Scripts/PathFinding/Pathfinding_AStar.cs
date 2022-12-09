@@ -63,13 +63,13 @@ public class Pathfinding_AStar : PathFinding
         {
             temp++;
             // If the current node is the end node, end the loop
-            if(currentNodeInfo.node == end)
+            if (currentNodeInfo.node == end)
             {
                 pathFound = true;
                 break;
             }
             // If there are no nodes in the open list, end the loop
-            if(openList.Count() == 0)
+            if (openList.Count() == 0)
             {
                 break;
             }
@@ -86,9 +86,9 @@ public class Pathfinding_AStar : PathFinding
                 {
                     // Checks if the node is already in the open list
                     bool nodeInOpenList = false;
-                    foreach(NodeInformation nodeInfo in openList)
+                    foreach (NodeInformation nodeInfo in openList)
                     {
-                        if(nodeInfo.node == neighborNode)
+                        if (nodeInfo.node == neighborNode)
                         {
                             nodeInOpenList = true;
                         }
@@ -135,7 +135,7 @@ public class Pathfinding_AStar : PathFinding
             }
         }
 
-        if(pathFound)
+        if (pathFound)
         {
             Debug.Log("PATH FOUND");
 
@@ -159,7 +159,7 @@ public class Pathfinding_AStar : PathFinding
             }
 
             // Loops through the path nodes list backwards and adds each node's position to the path list
-            for(int i = pathNodes.Count - 1; i >= 0; i--)
+            for (int i = pathNodes.Count - 1; i >= 0; i--)
             {
                 path.Add(new Vector2(pathNodes[i].node.transform.position.x, pathNodes[i].node.transform.position.y));
             }
@@ -168,7 +168,7 @@ public class Pathfinding_AStar : PathFinding
         }
         else
         {
-            Debug.Log ("NO PATH FOUND");
+            Debug.Log("NO PATH FOUND");
         }
 
 
@@ -183,22 +183,22 @@ public class Pathfinding_AStar : PathFinding
 
         Grid.ResetGridNodeColours();
 
-		foreach (NodeInformation node in closedList)
-		{
-			node.node.SetClosedInPathFinding();
-		}
+        foreach (NodeInformation node in closedList)
+        {
+            node.node.SetClosedInPathFinding();
+        }
 
-		foreach (NodeInformation node in openList)
-		{
-			node.node.SetOpenInPathFinding();
-		}
+        foreach (NodeInformation node in openList)
+        {
+            node.node.SetOpenInPathFinding();
+        }
 
-		foreach (NodeInformation node in pathNodes)
-		{
-			node.node.SetPathInPathFinding();
-		}
+        foreach (NodeInformation node in pathNodes)
+        {
+            node.node.SetPathInPathFinding();
+        }
 
-		m_Path = path;
+        m_Path = path;
     }
 
     private void PrintNodeInformation(NodeInformation node)
@@ -214,4 +214,3 @@ public class Pathfinding_AStar : PathFinding
     }
 
 }
-

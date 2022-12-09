@@ -13,6 +13,7 @@ public class DecisionMakingEntity : MovingEntity
     SteeringBehaviour_Pursuit m_Pursuit;
     SteeringBehaviour_Evade m_Evade;
     SteeringBehaviour_Seek m_Seek;
+    Pathfinding_AStar m_AStar = new Pathfinding_AStar(false, false);
 
     MovingEntity m_PlayerMovingEntity;
 
@@ -147,6 +148,23 @@ public class DecisionMakingEntity : MovingEntity
                         // Seeks the closest health pickup
                         activateBehaviour(state.seekHealth);
                         m_Seek.m_TargetPosition = m_closestHealthPickup.transform.position;
+                        Debug.Log(m_AStar.m_Path.Count);
+                        if (m_AStar.m_Path.Count == 0)
+                        {
+                            m_AStar.GeneratePath(Grid.GetNodeClosestWalkableToLocation(transform.position), Grid.GetNodeClosestWalkableToLocation(m_closestHealthPickup.transform.position));
+                        }
+                        else
+                        {
+                            if (m_AStar.m_Path.Count > 0)
+                            {
+                                Vector2 closestPoint = m_AStar.GetClosestPointOnPath(transform.position);
+
+                                if (Maths.Magnitude(closestPoint - (Vector2)transform.position) < 0.5f)
+                                    closestPoint = m_AStar.GetNextPointOnPath(transform.position);
+
+                                m_Seek.m_TargetPosition = closestPoint;
+                            }
+                        }
                     }
                     else
                     {
@@ -172,6 +190,9 @@ public class DecisionMakingEntity : MovingEntity
 
     void activateBehaviour(state behaviour)
     {
+        //USE THE FUNCTIONS:
+        //m_SteeringBehaviours.DisableAllSteeringBehaviours();
+        //m_SteeringBehaviours.EnableExclusive(m_Seek);
         // Deactivates all beahviours
         m_Wander.m_Active = false;
         m_Pursuit.m_Active = false;
