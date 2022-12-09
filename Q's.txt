@@ -1,0 +1,4 @@
+- Based on the FSM, where on the criterion grid do you think it would be at?
+- A star issue
+- Reflection marks
+- Player an AI move walls

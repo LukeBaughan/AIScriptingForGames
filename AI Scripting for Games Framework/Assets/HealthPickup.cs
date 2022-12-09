@@ -22,7 +22,7 @@ public class HealthPickup : MonoBehaviour
             ent.TakeDamage((ent.m_MaxHealth - ent.m_CurrentHealth) * -1);
             if(entDecision != null)
             {
-                entDecision.SetHealthLocated(false);
+                entDecision.onHealthPickedUp();
             }
 
             Debug.Log(ent.m_CurrentHealth);

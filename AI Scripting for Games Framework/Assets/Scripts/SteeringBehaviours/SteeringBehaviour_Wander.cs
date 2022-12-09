@@ -28,7 +28,7 @@ public class SteeringBehaviour_Wander : SteeringBehaviour
         // Sets the circle's position to be in front of the entity by the value of m_WanderOffset
         m_CirclePosition = new Vector2(transform.position.x, transform.position.y) + (Maths.Normalise(m_Manager.m_Entity.m_Velocity) * m_WanderOffset);
         // print(new Vector2(transform.position.x, transform.position.y) + " + " + Maths.Normalise(m_Manager.m_Entity.m_Velocity) + " * " + m_WanderOffset);
-        print(m_Manager.m_Entity.m_Velocity);
+        //print(m_Manager.m_Entity.m_Velocity);
 
         // Rotates m_CirclePosition to face the right direction 
         m_wanderDirection.x = Mathf.Cos(m_Angle) - Mathf.Sin(m_Angle);

@@ -32,7 +32,7 @@ public class SteeringBehaviour_CollisionAvoidance : SteeringBehaviour
         //The entity has multiple 'feelers' protruding in front of it (the amount of feelers and the angle of the feelers can be changed in the editor)
         // Sets the feelers to have the angle and rotation specified in the editor
         UpdateFeelers();
-
+        
         m_Steering = Vector2.zero;
         m_DesiredVelocity = Vector2.zero;
         // Set a very high value as the for loop will be looking for the feeler collision with the closest distance
@@ -60,12 +60,10 @@ public class SteeringBehaviour_CollisionAvoidance : SteeringBehaviour
                 }
             }
         }
-        //print(closestDistance);
 
         // Entity flees if one of the feelers hit a collider
         if(flee == true)
         {
-            Debug.Log(gameObject.name, this);
             // Gets the vector between the entity and the flee target
             Vector2 fleePositionVector = (new Vector2(transform.position.x, transform.position.y) - avoidancePoint);
             // Gets the unit vector of the fleePositionVector and multiplies it by the entity's max speed to get the desired velocity

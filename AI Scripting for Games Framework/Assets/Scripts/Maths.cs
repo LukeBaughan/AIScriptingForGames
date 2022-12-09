@@ -16,7 +16,7 @@ public static class Maths
         float magnitude = Magnitude(a);
 
         // Return a vector with the value (0, 0) to prevent an error when dividing by zero in the next return statement
-        if(magnitude == 0)
+        if (magnitude == 0)
         {
             return Vector2.zero;
         }
