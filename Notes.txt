@@ -1,0 +1,1 @@
+-Add debug output to help visualise what the ai is doing
