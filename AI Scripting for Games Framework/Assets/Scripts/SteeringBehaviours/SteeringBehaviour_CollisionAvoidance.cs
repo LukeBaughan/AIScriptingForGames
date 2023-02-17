@@ -44,13 +44,10 @@ public class SteeringBehaviour_CollisionAvoidance : SteeringBehaviour
         for (int i = 0; i < m_Feelers.Length; i++)
         {
             RaycastHit2D tempHit = Physics2D.Raycast(transform.position, m_FeelerVectors[i], m_FeelersLength[i], m_FeelerLayerMask.value);
-            //print(tempHit.distance);
 
             // Checks if the raycast hit a collider
             if (tempHit.collider != null)
             {
-                //print(tempHit.collider.gameObject.name);
-
                 // If the distance from the collision point is less than the previous point, make this the new closest point
                 if (tempHit.distance < closestDistance)
                 {

@@ -53,15 +53,13 @@ public class Pathfinding_AStar : PathFinding
         // Use Manhattan for finding g and Euclidean for h
 
         bool pathFound = false;
-        float lowest_fCost = float.MaxValue;
+        float lowest_fCost;
         // Sets the current node to the first node and adds it to the open list
-        NodeInformation currentNodeInfo = new(start, null, float.MaxValue, Heuristic_Euclidean(start, end));
+        NodeInformation currentNodeInfo = new(start, null, 0, Heuristic_Euclidean(start, end));
         openList.Add(currentNodeInfo);
 
-        int temp = 0;
-        while (!pathFound) //temp < 100)
+        while (!pathFound)
         {
-            temp++;
             // If the current node is the end node, end the loop
             if (currentNodeInfo.node == end)
             {
@@ -70,14 +68,54 @@ public class Pathfinding_AStar : PathFinding
             }
             // If there are no nodes in the open list, end the loop
             if (openList.Count() == 0)
-            {
                 break;
+            
+            bool neighborNodeFound = false;
+            bool touchingCorner = false;
+
+            // Checks if the current node is next to a wall node
+            for (int i = 0; i < currentNodeInfo.node.Neighbours.Count(); i += 2)
+            {
+                if (currentNodeInfo.node.Neighbours[i].m_Walkable == false)
+                {
+                    GridNode wallNode = currentNodeInfo.node.Neighbours[i];
+
+                    // If the neighbour node is a wall, check the wall's neighbours to see how many walls it is connected to
+                    int wallNeighbourCount = 0;
+                    for (int j = 0; j < wallNode.Neighbours.Count(); j++)
+                    {
+                        if (wallNode.Neighbours[j].m_Walkable == false)
+                            wallNeighbourCount++;
+                    }
+                    // If the wall is connected to 3 or less other walls, then it is a corner node
+                    if (wallNeighbourCount <= 3)
+                        touchingCorner = true;
+                }
             }
 
-            bool neighborNodeFound = false;
+            int neighbourIncrement;
+
+            if (m_CutCorners)
+            {
+                // If m_AllowDiagonal = true, set the increment to one so that all of the neighbour nodes are checked
+                // If m_AllowDiagonal = false, set the increment to two so that the corner nodes aren't checked
+                if (m_AllowDiagonal)
+                    neighbourIncrement = 1;
+                else
+                    neighbourIncrement = 2;
+            }
+            else
+            {
+                // If a neighbour node is a corner wall, don't get the next corner neighbour node (to prevent cutting the corner)
+                if (m_AllowDiagonal && !touchingCorner)
+                    neighbourIncrement = 1;
+                else
+                    neighbourIncrement = 2;
+            }
+
 
             // Goes through each neighbour node of the current node (skips the corner neighbours)
-            for (int i = 0; i < currentNodeInfo.node.Neighbours.Count(); i = i + 2)
+            for (int i = 0; i < currentNodeInfo.node.Neighbours.Count(); i = i + neighbourIncrement)
             {
                 GridNode neighborNode = currentNodeInfo.node.Neighbours[i];
 
@@ -89,9 +127,7 @@ public class Pathfinding_AStar : PathFinding
                     foreach (NodeInformation nodeInfo in openList)
                     {
                         if (nodeInfo.node == neighborNode)
-                        {
                             nodeInOpenList = true;
-                        }
                     }
 
                     // Checks if the node is already in the closed list
@@ -99,16 +135,14 @@ public class Pathfinding_AStar : PathFinding
                     foreach (NodeInformation nodeInfo in closedList)
                     {
                         if (nodeInfo.node == neighborNode)
-                        {
                             nodeInClosedList = true;
-                        }
                     }
 
                     // Add the node info to the open list if it isnt already in the open list or closed list, and if it is a walkable node
                     if (!nodeInOpenList && !nodeInClosedList && neighborNode.m_Walkable == true)
                     {
-                        //NodeInformation neighborNodeInfo = new NodeInformation(neighborNode, currentNodeInfo, currentNodeInfo.gCost + Heuristic_Manhattan(currentNodeInfo.node, neighborNode), Heuristic_Euclidean(neighborNode, end));
-                        NodeInformation neighborNodeInfo = new NodeInformation(neighborNode, currentNodeInfo, Heuristic_Manhattan(currentNodeInfo.node, neighborNode), Heuristic_Euclidean(neighborNode, end));
+                        NodeInformation neighborNodeInfo = new NodeInformation(neighborNode, currentNodeInfo,
+                            currentNodeInfo.gCost + Heuristic_Manhattan(currentNodeInfo.node, neighborNode), Heuristic_Euclidean(neighborNode, end));
                         openList.Add(neighborNodeInfo);
                         neighborNodeFound = true;
                     }
@@ -137,8 +171,6 @@ public class Pathfinding_AStar : PathFinding
 
         if (pathFound)
         {
-            Debug.Log("PATH FOUND");
-
             bool pathNodesFilled = false;
 
             // Adds all of the path nodes to the path list (currentNodeInfo is the end node to begin with)
@@ -148,14 +180,10 @@ public class Pathfinding_AStar : PathFinding
 
                 // Ends the loop when it reaches the start node
                 if (currentNodeInfo.node == start)
-                {
                     pathNodesFilled = true;
-                }
-                else
                 // If the node is not the start node, set the current node to it's parent
-                {
+                else
                     currentNodeInfo = currentNodeInfo.parent;
-                }
             }
 
             // Loops through the path nodes list backwards and adds each node's position to the path list
@@ -163,23 +191,7 @@ public class Pathfinding_AStar : PathFinding
             {
                 path.Add(new Vector2(pathNodes[i].node.transform.position.x, pathNodes[i].node.transform.position.y));
             }
-
-
         }
-        else
-        {
-            Debug.Log("NO PATH FOUND");
-        }
-
-
-
-
-        foreach (NodeInformation node in openList)
-        {
-            //PrintNodeInformation(node);
-        }
-
-        // My Code End
 
         Grid.ResetGridNodeColours();
 
@@ -212,5 +224,4 @@ public class Pathfinding_AStar : PathFinding
             Debug.Log("Position: " + node.node + ", Parent: " + node.parent.node + ", g: " + node.gCost + ", h: " + node.hCost + ", f: " + node.fCost);
         }
     }
-
 }

@@ -8,7 +8,10 @@ public class Task10_AStarPathfinding : MovingEntity
 	SteeringBehaviour_Seek m_Seek;
 	Pathfinding_AStar m_AStar;
 
-	protected override void Awake()
+	public bool m_AllowDiagonal;
+    public bool m_CutCorners;
+
+    protected override void Awake()
 	{
 		base.Awake();
 
@@ -22,7 +25,7 @@ public class Task10_AStarPathfinding : MovingEntity
 		if (!m_Seek)
 			Debug.LogError("Object doesn't have a Seek Steering Behaviour attached", this);
 
-		m_AStar = new Pathfinding_AStar(true, false);
+		m_AStar = new Pathfinding_AStar(m_AllowDiagonal, m_CutCorners);
 	}
 
 	protected override Vector2 GenerateVelocity()
@@ -35,11 +38,10 @@ public class Task10_AStarPathfinding : MovingEntity
 		if (m_AStar.m_Path.Count == 0)
 		{
 			Rect size = Grid.m_GridSize;
-			float x1 = 30f;//Random.Range(size.xMin, size.xMax); //-21.93114f; //grid 15		//Random.Range(size.xMin, size.xMax);
-            float y1 = -11.67f;//Random.Range(size.yMin, size.yMax);//1.968087f;  //grid 18		//Random.Range(size.yMin, size.yMax);
+			float x1 = Random.Range(size.xMin, size.xMax);
+			float y1 = Random.Range(size.yMin, size.yMax);
 
-
-            m_AStar.GeneratePath(Grid.GetNodeClosestWalkableToLocation(transform.position), Grid.GetNodeClosestWalkableToLocation(new Vector2(x1, y1)));
+			m_AStar.GeneratePath(Grid.GetNodeClosestWalkableToLocation(transform.position), Grid.GetNodeClosestWalkableToLocation(new Vector2(x1, y1)));
         }
 		else
 		{

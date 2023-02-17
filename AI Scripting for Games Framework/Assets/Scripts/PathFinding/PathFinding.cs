@@ -76,8 +76,6 @@ public abstract class PathFinding
         x = end.transform.position.x - start.transform.position.x;
         y = end.transform.position.y - start.transform.position.y;
         // Uses the pythagorean formula to find the euclidean distance between the two nodes
-        //Debug.Log("X: " + x + ", Y: " + y);
-        //Debug.Log(Mathf.Sqrt((x * x) + (y * y)));
         return Mathf.Sqrt((x * x) + (y * y));
     }
 }

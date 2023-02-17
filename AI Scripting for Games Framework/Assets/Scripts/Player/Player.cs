@@ -13,8 +13,19 @@ public class Player : MovingEntity
     public bool m_CanMoveWhileAttacking;
     bool m_Attacking;
 
+    private float m_AttackTime;
+    public float m_AttackRate;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        m_AttackTime = m_AttackRate;
+    }
+
     void Update()
     {
+        m_AttackTime += Time.deltaTime;
+
         m_Horizontal = Input.GetAxis("Horizontal");
         m_Vertical = Input.GetAxis("Vertical");
         
@@ -70,16 +81,21 @@ public class Player : MovingEntity
         }
     }
 
-    // Player takes damage if an enemy touches them
-    private void OnCollisionEnter2D(Collision2D collision)
-	{
-		Entity ent = collision.gameObject.GetComponent<Entity>();
+    // Player takes damage while the enemy is touching them
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (m_AttackTime >= m_AttackRate)
+        {
+            Entity ent = collision.gameObject.GetComponent<Entity>();
 
-		if (ent)
-		{
-			//TakeDamage(ent.m_AttackPower);
-		}
-	}
+            if (ent)
+            {
+                TakeDamage(ent.m_AttackPower);
+                // Resets the attack timer
+                m_AttackTime = 0;
+            }
+        }
+    }
 
 	protected override Vector2 GenerateVelocity()
 	{

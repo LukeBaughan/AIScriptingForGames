@@ -48,17 +48,6 @@ public class SteeringBehaviour_Manager : MonoBehaviour
 
     }
 
-    //// Old GenerateSteeringForce code
-    //// Returns the force of the first steering behaviour in the list (if the list isn't empty)
-    //if(m_SteeringBehaviours.Count > 0)
-    //{
-    //    return m_SteeringBehaviours[0].CalculateForce();
-    //}
-    //else
-    //{
-    //    return Vector2.zero;
-    //}
-
     public void EnableExclusive(SteeringBehaviour behaviour)
 	{
         if(m_SteeringBehaviours.Contains(behaviour))

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class DecisionMakingEntity : MovingEntity
 {
@@ -13,7 +14,7 @@ public class DecisionMakingEntity : MovingEntity
     SteeringBehaviour_Pursuit m_Pursuit;
     SteeringBehaviour_Evade m_Evade;
     SteeringBehaviour_Seek m_Seek;
-    Pathfinding_AStar m_AStar = new Pathfinding_AStar(false, false);
+    Pathfinding_AStar m_AStar = new Pathfinding_AStar(true, false);
 
     MovingEntity m_PlayerMovingEntity;
 
@@ -33,6 +34,7 @@ public class DecisionMakingEntity : MovingEntity
     HealthPickup m_closestHealthPickup;
     bool m_HealthPickedUp = false;
 
+    public float m_FOV;
     public float m_DetectionRange;
 
     protected override void Awake()
@@ -90,8 +92,8 @@ public class DecisionMakingEntity : MovingEntity
         {
             case state.wander:
                 activateBehaviour(state.wander);
-                // Pursues the player if they are within range and are visible
-                if (getPlayerInRange() && getPlayerVisable())
+                // Pursues the player if they are within range and are not behind a wall
+                if (getPlayerInRange() && !getPlayerBehindWall())
                     m_CurrentState = state.pursuePlayer;
                 break;
             case state.pursuePlayer:
@@ -100,7 +102,7 @@ public class DecisionMakingEntity : MovingEntity
                 if (!getPlayerInRange())
                     m_CurrentState = state.wander;
                 // If the player is behind a wall, go to their last known position
-                else if (!getPlayerVisable())
+                else if (getPlayerBehindWall())
                 {
                     m_LastSeenPlayerPosition = new Vector2(m_PlayerMovingEntity.transform.position.x, m_PlayerMovingEntity.transform.position.y);
                     m_CurrentState = state.goToLastSeenPosition;
@@ -112,19 +114,26 @@ public class DecisionMakingEntity : MovingEntity
                 }
                 break;
             case state.goToLastSeenPosition:
-                // If the player is in range and is visible, pursue them
-                if (getPlayerInRange() && getPlayerVisable())
+                // If the player is in range and is not behind a wall, pursue them and reset the a star algorithm
+                if (getPlayerInRange() && !getPlayerBehindWall())
+                {
+                    m_AStar = new Pathfinding_AStar(false, false);
                     m_CurrentState = state.pursuePlayer;
+                }
                 else
                 {
                     // If the entity has reached the player's last seen position, return to wandering
-                    if (Maths.Magnitude(new Vector2(transform.position.x, transform.position.y) - m_LastSeenPlayerPosition) < 0.1)
+                    if (Maths.Magnitude(new Vector2(transform.position.x, transform.position.y) - m_LastSeenPlayerPosition) < 0.75)
+                    {
+                        m_AStar = new Pathfinding_AStar(false, false);
                         m_CurrentState = state.wander;
+                    }
                     // If the entity hasn't reached the player's last seen position, move to it
                     else
                     {
                         activateBehaviour(state.goToLastSeenPosition);
-                        m_Seek.m_TargetPosition = m_LastSeenPlayerPosition;
+                        AStarPath(m_LastSeenPlayerPosition);
+                        //m_Seek.m_TargetPosition = m_LastSeenPlayerPosition;
                     }
                 }
                 break;
@@ -145,26 +154,9 @@ public class DecisionMakingEntity : MovingEntity
                                 m_closestHealthPickup = healthPickup;
                             }
                         }
-                        // Seeks the closest health pickup
+                        // Uses A star to find and seek the closest health pickup
                         activateBehaviour(state.seekHealth);
-                        m_Seek.m_TargetPosition = m_closestHealthPickup.transform.position;
-                        Debug.Log(m_AStar.m_Path.Count);
-                        if (m_AStar.m_Path.Count == 0)
-                        {
-                            m_AStar.GeneratePath(Grid.GetNodeClosestWalkableToLocation(transform.position), Grid.GetNodeClosestWalkableToLocation(m_closestHealthPickup.transform.position));
-                        }
-                        else
-                        {
-                            if (m_AStar.m_Path.Count > 0)
-                            {
-                                Vector2 closestPoint = m_AStar.GetClosestPointOnPath(transform.position);
-
-                                if (Maths.Magnitude(closestPoint - (Vector2)transform.position) < 0.5f)
-                                    closestPoint = m_AStar.GetNextPointOnPath(transform.position);
-
-                                m_Seek.m_TargetPosition = closestPoint;
-                            }
-                        }
+                        AStarPath(m_closestHealthPickup.transform.position);
                     }
                     else
                     {
@@ -188,35 +180,49 @@ public class DecisionMakingEntity : MovingEntity
         }
     }
 
+
+
     void activateBehaviour(state behaviour)
     {
-        //USE THE FUNCTIONS:
-        //m_SteeringBehaviours.DisableAllSteeringBehaviours();
-        //m_SteeringBehaviours.EnableExclusive(m_Seek);
-        // Deactivates all beahviours
-        m_Wander.m_Active = false;
-        m_Pursuit.m_Active = false;
-        m_Seek.m_Active = false;
-        m_Evade.m_Active = false;
-
         // Activates the specified behaviour
         switch (behaviour)
         {
             case state.wander:
-                m_Wander.m_Active = true;
+                m_SteeringBehaviours.EnableExclusive(m_Wander);
                 break;
             case state.pursuePlayer:
-                m_Pursuit.m_Active = true;
+                m_SteeringBehaviours.EnableExclusive(m_Pursuit);
                 break;
             case state.goToLastSeenPosition:
-                m_Seek.m_Active = true;
+                m_SteeringBehaviours.EnableExclusive(m_Seek);
                 break;
             case state.seekHealth:
-                m_Seek.m_Active = true;
+                m_SteeringBehaviours.EnableExclusive(m_Seek);
                 break;
             case state.evadePlayer:
-                m_Evade.m_Active = true;
+                m_SteeringBehaviours.EnableExclusive(m_Evade);
                 break;
+        }
+    }
+
+    private void AStarPath(Vector2 targetPosition)
+    {
+        // Uses the A Star pathfinding to generate a path to the target position
+        if (m_AStar.m_Path.Count == 0)
+        {
+            m_AStar.GeneratePath(Grid.GetNodeClosestWalkableToLocation(transform.position), Grid.GetNodeClosestWalkableToLocation(targetPosition));
+        }
+        else
+        {
+            if (m_AStar.m_Path.Count > 0)
+            {
+                Vector2 closestPoint = m_AStar.GetClosestPointOnPath(transform.position);
+
+                if (Maths.Magnitude(closestPoint - (Vector2)transform.position) < 0.6f)
+                    closestPoint = m_AStar.GetNextPointOnPath(transform.position);
+
+                m_Seek.m_TargetPosition = closestPoint;
+            }
         }
     }
 
@@ -234,25 +240,42 @@ public class DecisionMakingEntity : MovingEntity
         return false;
     }
 
-    public bool getPlayerVisable()
+    public bool getPlayerBehindWall()
     {
         // Performs a raycast between the entity and the player
         RaycastHit2D[] entities = Physics2D.LinecastAll(transform.position, m_PlayerMovingEntity.transform.position);
 
-        // If a wall is hit in the raycast, then return false
         foreach (RaycastHit2D hit in entities)
         {
-           if(hit.transform.GetComponent<TilemapCollider2D>() != null)
+            // If a wall is hit in the raycast, then return true
+            if (hit.transform.GetComponent<TilemapCollider2D>() != null)
             {
-                return false;
+                return true;
             }
         }
-        // If there is no wall between the entity and the player, then return true
-        return true;
+        // If there is no wall between the entity and the player, then return false
+        return false;
+
+    }
+
+    public bool getPlayerInFOV() // Not in use - Didn't work well with the randomness of wander
+    {
+        // Checks if the dot product of the entity's position to the player's position is greater than whatever the FOV is set to
+        float dotProduct = Maths.Dot(m_SteeringBehaviours.m_Entity.m_Velocity, m_PlayerMovingEntity.transform.position);
+        Debug.Log(dotProduct);
+
+        if (dotProduct > m_FOV)
+            return true;
+
+        // If the player is out of the entity's FOV, return false
+        return false;
+
     }
 
     public void onHealthPickedUp()
     {
+        // Resets the A star pathfinding algorithm
         m_HealthPickedUp = true;
+        m_AStar = new Pathfinding_AStar(false, false);
     }
 }

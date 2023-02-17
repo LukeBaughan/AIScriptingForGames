@@ -3471,6 +3471,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
+      propertyPath: m_MaxHealth
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2123130925413106561, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -14387,6 +14391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxHealth: 5
+  m_CurrentHealth: 0
   m_AttackPower: 2
   m_MaxSpeed: 3
   m_Mass: 1
