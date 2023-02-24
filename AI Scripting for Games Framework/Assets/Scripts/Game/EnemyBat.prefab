@@ -12,13 +12,11 @@ GameObject:
   - component: {fileID: 2271500133221908377}
   - component: {fileID: 2271500133221908376}
   - component: {fileID: 2271500133221908378}
-  - component: {fileID: 2271500133221908381}
-  - component: {fileID: 970533612631538084}
   - component: {fileID: 2271500133221908382}
   - component: {fileID: 2271500133221908369}
-  - component: {fileID: 8165271622235507836}
+  - component: {fileID: 2030312582064542481}
   m_Layer: 9
-  m_Name: Bat
+  m_Name: EnemyBat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,59 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MaxForce: 100
   m_RemainingForce: 0
-  m_SteeringBehaviours:
-  - {fileID: 2271500133221908381}
-  - {fileID: 970533612631538084}
---- !u!114 &2271500133221908381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2271500133221908368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3568ffaa49247b47b69ce3318955cb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Debug_ShowDebugLines: 1
-  m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
-  m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
-  m_Debug_SteeringColour: {r: 1, g: 0, b: 0.9679408, a: 1}
-  m_Active: 1
-  m_Weight: 50
-  m_Feelers:
-  - m_Angle: 0
-    m_MaxLength: 5
-    m_Colour: {r: 0.8867924, g: 0, b: 0, a: 1}
-  - m_Angle: 15
-    m_MaxLength: 5
-    m_Colour: {r: 0.8867924, g: 0, b: 0, a: 1}
-  - m_Angle: 345
-    m_MaxLength: 5
-    m_Colour: {r: 0.8867924, g: 0, b: 0, a: 1}
-  m_FeelerLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
---- !u!114 &970533612631538084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2271500133221908368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d7dd8f3a5e8cfc4d92d2904d71f13e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Debug_ShowDebugLines: 0
-  m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
-  m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
-  m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
-  m_Active: 1
-  m_Weight: 20
-  m_TargetPosition: {x: 0, y: 0}
+  m_SteeringBehaviours: []
 --- !u!58 &2271500133221908382
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -215,7 +161,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8165271622235507836
+--- !u!114 &2030312582064542481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
