@@ -176,7 +176,7 @@ MonoBehaviour:
   m_MaxHealth: 5
   m_CurrentHealth: 0
   m_AttackPower: 2
-  m_MaxSpeed: 5
+  m_MaxSpeed: 1
   m_Mass: 1
   m_RotatesBasedOnVelocity: 0
   m_FlipsBasedOnVelocity: 0

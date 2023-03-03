@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class GameAI : MovingEntity
 {
-    protected override Vector2 GenerateVelocity()
-    {
-        return Vector2.zero;
-    }
+	SteeringBehaviour_Manager m_SteeringBehaviours;
+	SteeringBehaviour_Pursuit m_Pursuit;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	protected override void Awake()
+	{
+		base.Awake();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		m_SteeringBehaviours = GetComponent<SteeringBehaviour_Manager>();
+
+		if (!m_SteeringBehaviours)
+			Debug.LogError("Object doesn't have a Steering Behaviour Manager attached", this);
+	}
+
+	protected void Start()
+	{
+	}
+
+	protected override Vector2 GenerateVelocity()
+	{
+		return m_SteeringBehaviours.GenerateSteeringForce();
+	}
 }
