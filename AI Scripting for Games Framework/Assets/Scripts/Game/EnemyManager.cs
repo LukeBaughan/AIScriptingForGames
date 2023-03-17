@@ -8,7 +8,10 @@ public class EnemyManager : MonoBehaviour
 {
     public GameObject enemyToSpawn;
     private MovingEntity enemy;
+    public float enemySpawnRate;
+
     private MovingEntity m_PlayerMovingEntity;
+
     // How far the enemy can spawn from the camera border
     public float spawnBoundsSize = 2.0f;
     private Vector2 cameraSize;
@@ -25,7 +28,7 @@ public class EnemyManager : MonoBehaviour
         m_PlayerMovingEntity = GameObject.Find("Player").GetComponent<MovingEntity>();
 
         UpdateSpawnZones();
-        InvokeRepeating("SpawnEnemyRandom", 1.0f, 0.5f);
+        InvokeRepeating("SpawnEnemyRandom", 1.0f, enemySpawnRate);
     }
 
     private void Update()

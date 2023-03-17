@@ -25,10 +25,15 @@ public abstract class MovingEntity : Entity
         MoveAndRotate();
 	}
 
-	protected void MoveAndRotate()
-	{
+    protected void MoveAndRotate()
+    {
+        Vector2 acceleration;
         Vector2 force = GenerateVelocity();
-        Vector2 acceleration = force / m_Mass;
+        if (force.magnitude > 0)
+            acceleration = force / m_Mass;
+        else
+            acceleration = Vector2.zero;
+
         m_Rigidbody.velocity += acceleration * Time.deltaTime;
         m_Rigidbody.velocity = Vector2.ClampMagnitude(m_Rigidbody.velocity, m_MaxSpeed);
 

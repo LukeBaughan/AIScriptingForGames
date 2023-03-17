@@ -1045,11 +1045,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!1 &92701217 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2123130925413106588, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
+  m_PrefabInstance: {fileID: 628276348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &183655083 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2123130925413106561, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
   m_PrefabInstance: {fileID: 628276348}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &183655089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92701217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f24dd498ef84d2c4ea0a54b57f5c80f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &310829147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,13 +1253,25 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2123130923640972484, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
       propertyPath: m_MaxSpeed
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
       propertyPath: m_MaxHealth
-      value: 100
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
+      propertyPath: m_AttackRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
+      propertyPath: m_CurrentHealth
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2123130925413106561, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
       propertyPath: m_RootOrder
@@ -71403,6 +71432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyToSpawn: {fileID: 2271500133221908368, guid: 6c30ebeaf5a83b64bb24bcc36c6bac28, type: 3}
+  enemySpawnRate: 1
   spawnBoundsSize: 2
 --- !u!4 &1222487945
 Transform:

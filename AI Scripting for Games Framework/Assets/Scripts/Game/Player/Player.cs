@@ -7,14 +7,14 @@ public class Player : MovingEntity
     public float m_Acceleration;
 
     //input
-    float m_Horizontal;
-    float m_Vertical;
+    public float m_Horizontal;
+    public float m_Vertical;
 
     public bool m_CanMoveWhileAttacking;
     bool m_Attacking;
 
     private float m_AttackTime;
-    public float m_AttackRate;
+    public float m_AttackRate = 1.0f;
 
     protected override void Awake()
     {
@@ -22,18 +22,14 @@ public class Player : MovingEntity
         m_AttackTime = m_AttackRate;
     }
 
+    private void Start()
+    {
+        InvokeRepeating("Attack", 1.0f, m_AttackRate);
+    }
+
     void Update()
     {
         m_AttackTime += Time.deltaTime;
-
-        m_Horizontal = Input.GetAxis("Horizontal");
-        m_Vertical = Input.GetAxis("Vertical");
-        
-        if(Input.GetKeyDown(KeyCode.Space))
-		{
-            m_Animator.SetTrigger("Attack");
-            m_Attacking = true;
-        }
 
         if (!m_Attacking || (m_Attacking && m_CanMoveWhileAttacking))
         {
@@ -63,6 +59,12 @@ public class Player : MovingEntity
                 m_Animator.SetInteger("Direction", -1);
             }
         }
+    }
+
+    public void Attack()
+    {
+        m_Animator.SetTrigger("Attack");
+        m_Attacking = true;
     }
 
     public void StopAttack()
