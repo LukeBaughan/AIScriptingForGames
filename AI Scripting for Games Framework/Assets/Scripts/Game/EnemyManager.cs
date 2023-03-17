@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -7,11 +9,9 @@ public class EnemyManager : MonoBehaviour
     public GameObject enemyToSpawn;
     private MovingEntity enemy;
     private MovingEntity m_PlayerMovingEntity;
-    private float spawnBoundsSize = 2.0f;
-    public float x;
-    public float y;
-    public float width;
-    public float height;
+    // How far the enemy can spawn from the camera border
+    public float spawnBoundsSize = 2.0f;
+    private Vector2 cameraSize;
 
     Rect spawnZoneLeft = Rect.zero;
     Rect spawnZoneRight = Rect.zero;
@@ -24,20 +24,112 @@ public class EnemyManager : MonoBehaviour
     {
         m_PlayerMovingEntity = GameObject.Find("Player").GetComponent<MovingEntity>();
 
-        SpawnEnemyGroup();
+        UpdateSpawnZones();
+        InvokeRepeating("SpawnEnemyRandom", 1.0f, 0.5f);
     }
 
-    private void SpawnEnemyGroup()
+    private void Update()
     {
-        SetUpspawnZones();
-        //SpawnEnemy();
+        UpdateSpawnZones();
     }
 
-    private void SpawnEnemy()
+    private void SpawnEnemyRandom()
+    {
+        // Picks a random zone to spawn the enemy in
+        int spawnZoneValue = Random.Range(0, 4);
+
+        switch (spawnZoneValue)
+        {
+            case 0:
+                SpawnEnemy(GetRandomPositonInZone(spawnZoneLeft), spawnZoneValue);
+                break;
+            case 1:
+                SpawnEnemy(GetRandomPositonInZone(spawnZoneRight), spawnZoneValue);
+                break;
+            case 2:
+                SpawnEnemy(GetRandomPositonInZone(spawnZoneTop), spawnZoneValue);
+                break;
+            case 3:
+                SpawnEnemy(GetRandomPositonInZone(spawnZoneBottom), spawnZoneValue);
+                break;
+            default:
+                Debug.Log("Range Too Large");
+                break;
+        }
+    }
+
+    private Vector2 GetRandomPositonInZone(Rect spawnZone)
+    {
+        // Gets a random point in the zone's perimeter
+        Vector2 spawnPosition = new Vector2(Random.Range(spawnZone.position.x - (spawnZone.size.x / 2), spawnZone.position.x + (spawnZone.size.x / 2)),
+            Random.Range(spawnZone.position.y - (spawnZone.size.y / 2), spawnZone.position.y + (spawnZone.size.y / 2)));
+
+        return spawnPosition;
+    }
+
+    private void SpawnEnemy(Vector2 spawnLocation, int spawnZoneValue)
     {
         // Spawns the enemy
-        GameObject enemyObj = Instantiate(enemyToSpawn, new Vector3(10,10,0), Quaternion.identity);
+        GameObject enemyObj = Instantiate(enemyToSpawn, new Vector3(spawnLocation.x, spawnLocation.y, 0), Quaternion.identity);
         enemy = enemyObj.GetComponent<MovingEntity>();
+
+        CircleCollider2D enemyCollider = enemyObj.GetComponent<CircleCollider2D>();
+        SpriteRenderer enemySpriteRenderer = enemyObj.GetComponent<SpriteRenderer>();
+
+        bool suitableSpawn = false;
+
+        // Prevents the enemy from spawning on top of another enemy
+        while (!suitableSpawn)
+        {
+            Collider2D[] overlappingEnemies = Physics2D.OverlapCircleAll(enemyObj.transform.position, enemySpriteRenderer.bounds.size.x / 2);
+            // If there are no overlapping enemies, it is a suitable spawn
+            if (overlappingEnemies.Length == 0)
+            {
+                suitableSpawn = true;
+                break;
+            }
+            else
+            {
+                foreach (Collider2D entity in overlappingEnemies)
+                {
+                    // Keeps suitableSpawn false and breaks the loop if the enemy is colliding with another enemy
+                    if (entity.GetComponent<MovingEntity>() && entity.GetComponent<MovingEntity>().gameObject != enemyObj.gameObject)
+                    {
+                        suitableSpawn = false;
+                        break;
+                    }
+                    else
+                        suitableSpawn = true;
+                }
+            }
+            // If the spawn is not suitable, move it along (by its size amount)
+            if (suitableSpawn)
+                break;
+            else
+            {
+                // Changes the move direction based on which zone the enemy is in
+                switch (spawnZoneValue)
+                {
+                    // Left
+                    case 0:
+                        enemyObj.transform.position = new Vector3(enemyObj.transform.position.x - enemySpriteRenderer.bounds.size.x, enemyObj.transform.position.y, 0);
+                        break;
+                    // Right
+                    case 1:
+                        enemyObj.transform.position = new Vector3(enemyObj.transform.position.x + enemySpriteRenderer.bounds.size.x, enemyObj.transform.position.y, 0);
+                        break;
+                    // Top
+                    case 2:
+                        enemyObj.transform.position = new Vector3(enemyObj.transform.position.x, enemyObj.transform.position.y + enemySpriteRenderer.bounds.size.y, 0);
+                        break;
+                    // Bottom
+                    case 3:
+                        enemyObj.transform.position = new Vector3(enemyObj.transform.position.x, enemyObj.transform.position.y - enemySpriteRenderer.bounds.size.y, 0);
+                        break;
+                }
+            }
+        }
+
 
         // Gets the steering manager and steering behaviour/s
         SteeringBehaviour_Manager m_Manager = enemyObj.GetComponent<SteeringBehaviour_Manager>();
@@ -50,33 +142,32 @@ public class EnemyManager : MonoBehaviour
         m_Manager.EnableExclusive(m_Pursuit);
     }
 
-    private Vector3 SetUpspawnZones()
+    private void UpdateSpawnZones()
     {
-        Vector2 cameraSize;
-        // How far the enemy can spawn from the camera border
-        //float spawnBoundsSize = 7;
-
+        // Gets the camera object and its size
         Camera camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         cameraSize.y = camera.orthographicSize;
-
         cameraSize.x = cameraSize.y * Screen.width / Screen.height;
-
-        x = cameraSize.x;
-        y = cameraSize.y;
-
-        //float SpawnX = Random.Range(((cameraSize.x * -1) - spawnBoundsSize), (cameraSize.x  + spawnBoundsSize));
-        // if(SpawnX > cameraSize.x)
 
         float cameraPosX = Camera.main.transform.position.x;
         float cameraPosY = Camera.main.transform.position.y;
 
-        
-        spawnZoneLeft.position = new Vector2(cameraPosX + x + spawnBoundsSize, cameraPosY);
+        // Calculates the size and positions of the spawn zones
+        // Left
+        spawnZoneLeft.position = new Vector2(cameraPosX - cameraSize.x - spawnBoundsSize, cameraPosY);
+        spawnZoneLeft.size = new Vector2(spawnBoundsSize, cameraSize.y * 2.6f);
 
-        //float spawnX = spawnZone.x;
+        // Right
+        spawnZoneRight.position = new Vector2(cameraPosX + cameraSize.x + spawnBoundsSize, cameraPosY);
+        spawnZoneRight.size = spawnZoneLeft.size;
 
-        return new Vector3(0, 0, 0);
+        // Top
+        spawnZoneTop.position = new Vector2(cameraPosX, cameraPosY + cameraSize.y + spawnBoundsSize);
+        spawnZoneTop.size = new Vector2(cameraSize.x * 2.1f, spawnBoundsSize);
 
+        // Bottom
+        spawnZoneBottom.position = new Vector2(cameraPosX, cameraPosY - cameraSize.y - spawnBoundsSize);
+        spawnZoneBottom.size = spawnZoneTop.size;
     }
 
     private void OnDrawGizmos()
@@ -84,21 +175,25 @@ public class EnemyManager : MonoBehaviour
         float cameraPosX = Camera.main.transform.position.x;
         float cameraPosY = Camera.main.transform.position.y;
 
-        //right
-        Gizmos.color = Color.blue;
-        Gizmos.DrawCube(new Vector3(cameraPosX + x + spawnBoundsSize, cameraPosY, 0), new Vector3(spawnBoundsSize, y * 2.6f, 1));
+        ////left
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawCube(new Vector3(spawnZoneLeft.position.x, spawnZoneLeft.position.y, 0), new Vector3(spawnZoneLeft.size.x, spawnZoneLeft.size.y, 1));
+        ////Gizmos.DrawCube(new Vector3(cameraPosX - cameraSize.x - spawnBoundsSize, cameraPosY, 0), new Vector3(spawnBoundsSize, cameraSize.y * 2.6f, 1));
 
-        //left
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(new Vector3(cameraPosX - x - spawnBoundsSize, cameraPosY, 0), new Vector3(spawnBoundsSize, y * 2.6f, 1));
+        ////right
+        //Gizmos.color = Color.blue;
+        //Gizmos.DrawCube(new Vector3(spawnZoneRight.position.x, spawnZoneRight.position.y, 0), new Vector3(spawnZoneRight.size.x, spawnZoneRight.size.y, 1));
+        ////Gizmos.DrawCube(new Vector3(cameraPosX + cameraSize.x + spawnBoundsSize, cameraPosY, 0), new Vector3(spawnBoundsSize, cameraSize.y * 2.6f, 1));
 
-        //top
-        Gizmos.color = Color.green;
-        Gizmos.DrawCube(new Vector3(cameraPosX, cameraPosY + y + spawnBoundsSize, 0), new Vector3(x * 2.1f, spawnBoundsSize, 1));
+        ////top
+        //Gizmos.color = Color.green;
+        //Gizmos.DrawCube(new Vector3(spawnZoneTop.position.x, spawnZoneTop.position.y, 0), new Vector3(spawnZoneTop.size.x, spawnZoneTop.size.y, 1));
+        ////Gizmos.DrawCube(new Vector3(cameraPosX, cameraPosY + cameraSize.y + spawnBoundsSize, 0), new Vector3(cameraSize.x * 2.1f, spawnBoundsSize, 1));
 
-        //bottom
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawCube(new Vector3(cameraPosX, cameraPosY - y - spawnBoundsSize, 0), new Vector3(x * 2.1f, spawnBoundsSize, 1));
+        ////bottom
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawCube(new Vector3(spawnZoneBottom.position.x, spawnZoneBottom.position.y, 0), new Vector3(spawnZoneBottom.size.x, spawnZoneBottom.size.y, 1));
+        ////Gizmos.DrawCube(new Vector3(cameraPosX, cameraPosY - cameraSize.y - spawnBoundsSize, 0), new Vector3(cameraSize.x * 2.1f, spawnBoundsSize, 1));
     }
 
 }
