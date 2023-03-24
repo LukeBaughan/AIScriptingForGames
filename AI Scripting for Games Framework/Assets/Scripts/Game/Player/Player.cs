@@ -16,6 +16,11 @@ public class Player : MovingEntity
     private float m_AttackTime;
     public float m_AttackRate = 1.0f;
 
+    private float xp = 0.0f;
+
+    Rect weaponBox = Rect.zero;
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -65,12 +70,17 @@ public class Player : MovingEntity
     {
         m_Animator.SetTrigger("Attack");
         m_Attacking = true;
+
+        // Creates a debug box to show the weapon's radius
     }
 
     public void StopAttack()
 	{
         m_Attacking = false;
-	}
+
+        // Destorys the weapon's debug box
+
+    }
 
     // Enemy takes damage if it is in the weapon's collider
     private void OnTriggerEnter2D(Collider2D collision)

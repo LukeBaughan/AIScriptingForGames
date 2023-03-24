@@ -1,3 +1,4 @@
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +22,18 @@ public class EnemyManager : MonoBehaviour
     Rect spawnZoneTop = Rect.zero;
     Rect spawnZoneBottom = Rect.zero;
 
+    public UnityEvent m_OnEnemyDead;
 
     // Start is called before the first frame update
-    void Start()
+    public void Initialise()
     {
         m_PlayerMovingEntity = GameObject.Find("Player").GetComponent<MovingEntity>();
 
         UpdateSpawnZones();
         InvokeRepeating("SpawnEnemyRandom", 1.0f, enemySpawnRate);
+
+        if (m_OnEnemyDead != null)
+            m_OnEnemyDead = new UnityEvent();
     }
 
     private void Update()
@@ -143,10 +148,22 @@ public class EnemyManager : MonoBehaviour
         // Sets the enemy's target to be the player
         m_Pursuit.m_PursuingEntity = m_PlayerMovingEntity;
         m_Manager.EnableExclusive(m_Pursuit);
+
+        GameAI enemyAI = enemyObj.GetComponent<GameAI>();
+        enemyAI.Initialise();
+        enemyAI.m_OnDead.AddListener(onEnemyDead);
+    }
+
+    // AddListener set in game manager
+    void onEnemyDead()
+    {
+        m_OnEnemyDead.Invoke();
     }
 
     private void UpdateSpawnZones()
     {
+
+
         // Gets the camera object and its size
         Camera camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         cameraSize.y = camera.orthographicSize;
