@@ -1055,7 +1055,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2123130925413106561, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
   m_PrefabInstance: {fileID: 628276348}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &183655089
+--- !u!114 &183655093 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
+  m_PrefabInstance: {fileID: 628276348}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92701217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce2f112f6b89af4dbddff342fe19d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &183655095
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1064,9 +1075,64 @@ MonoBehaviour:
   m_GameObject: {fileID: 92701217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f24dd498ef84d2c4ea0a54b57f5c80f1, type: 3}
+  m_Script: {fileID: 11500000, guid: f1da31eecfbe647429e5780014507a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &183655096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92701217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71aa3d57e48c65a47a9bca32eb36e1ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxForce: 100
+  m_RemainingForce: 0
+  m_SteeringBehaviours: []
+--- !u!114 &183655097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92701217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96a06f954055d8b499fa882ce2098a9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Debug_ShowDebugLines: 1
+  m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
+  m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
+  m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
+  m_Active: 1
+  m_Weight: 20
+  m_WanderRadius: 2
+  m_WanderOffset: 2
+  m_AngleDisplacement: 2.5
+--- !u!114 &183655102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92701217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bee50a5991f76488cc7e8e8eaba21f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Debug_ShowDebugLines: 1
+  m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
+  m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
+  m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
+  m_Active: 1
+  m_Weight: 20
+  m_PursuingEntity: {fileID: 0}
 --- !u!1 &310829147
 GameObject:
   m_ObjectHideFlags: 0
@@ -73335,7 +73401,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyManager: {fileID: 1222487944}
-  player: {fileID: 0}
+  controller: {fileID: 0}
+  player: {fileID: 183655093}
 --- !u!4 &1519668477
 Transform:
   m_ObjectHideFlags: 0

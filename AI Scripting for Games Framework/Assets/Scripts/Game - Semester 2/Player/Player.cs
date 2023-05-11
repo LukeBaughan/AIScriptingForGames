@@ -20,16 +20,40 @@ public class Player : MovingEntity
 
     Rect weaponBox = Rect.zero;
 
+    // AI
+
+    public SteeringBehaviour_Manager m_SB_Manager; 
+    public SteeringBehaviour_Wander m_Wander;
+    public SteeringBehaviour_Pursuit m_Pursuit;
+
 
     protected override void Awake()
     {
         base.Awake();
         m_AttackTime = m_AttackRate;
+
+        m_SB_Manager = GetComponent<SteeringBehaviour_Manager>();
+        if(!m_SB_Manager)
+            Debug.LogError("Object doesn't have a Steering Behaviour Manager attached", this);
+
+        m_Wander = GetComponent<SteeringBehaviour_Wander>();
+        if (!m_Wander)
+            Debug.LogError("Object doesn't have a Steering Behaviour Wander attached", this);
+
+        m_Pursuit = GetComponent<SteeringBehaviour_Pursuit>();
+        if (!m_Pursuit)
+            Debug.LogError("Object doesn't have a Steering Behaviour Pursuit attached", this);
     }
 
     private void Start()
     {
         InvokeRepeating("Attack", 1.0f, m_AttackRate);
+    }
+
+    public void Initialise()
+    {
+        m_SB_Manager.m_SteeringBehaviours.Add(m_Wander);
+        m_SB_Manager.m_SteeringBehaviours.Add(m_Pursuit);
     }
 
     void Update()
@@ -111,6 +135,14 @@ public class Player : MovingEntity
 
 	protected override Vector2 GenerateVelocity()
 	{
-		return new Vector2(m_Horizontal, m_Vertical) * m_Acceleration;
+        Vector2 steeringForce = m_SB_Manager.GenerateSteeringForce();
+
+        // Direction
+        m_Horizontal = steeringForce.x;
+        m_Vertical = steeringForce.y;
+
+        return steeringForce;
+
+        //return new Vector2(m_Horizontal, m_Vertical) * m_Acceleration;
     }
 }

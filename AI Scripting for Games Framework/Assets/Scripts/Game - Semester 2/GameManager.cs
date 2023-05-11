@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public EnemyManager enemyManager;
+    public AI_Controller controller;
     public Player player;
 
 
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
         enemyManager.Initialise();
         // Calls the AwardXP function when an enemy is killed
         enemyManager.m_OnEnemyDead.AddListener(AwardXP);
+
+        controller = player.GetComponent<AI_Controller>();
+        controller.Initialise();
     }
 
     private void AwardXP()

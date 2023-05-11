@@ -8,6 +8,8 @@ public class GameAI : MovingEntity
 	SteeringBehaviour_Manager m_SteeringBehaviours;
 	SteeringBehaviour_Pursuit m_Pursuit;
 
+	public bool m_OnScreen = false;
+
 	public UnityEvent m_OnDead;
 
 	protected override void Awake()
@@ -37,4 +39,14 @@ public class GameAI : MovingEntity
 		if(m_CurrentHealth <= 0)
 			m_OnDead.Invoke();
     }
+
+	private void OnBecameVisible()
+	{
+		m_OnScreen = true;
+	}
+
+	private void OnBecameInvisible()
+	{
+		//m_OnScreen = false;
+	}
 }
