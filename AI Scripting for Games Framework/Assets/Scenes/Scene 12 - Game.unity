@@ -1131,8 +1131,29 @@ MonoBehaviour:
   m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
   m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
   m_Active: 1
-  m_Weight: 20
+  m_Weight: 30
   m_PursuingEntity: {fileID: 0}
+  m_SafeDistance: 0
+--- !u!114 &183655103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92701217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8540f8d08eb5d459b81b41612a1e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Debug_ShowDebugLines: 1
+  m_Debug_DesiredVelocityColour: {r: 0, g: 0, b: 1, a: 1}
+  m_Debug_CurrentVelocityColour: {r: 0, g: 1, b: 0, a: 1}
+  m_Debug_SteeringColour: {r: 1, g: 0, b: 0, a: 1}
+  m_Active: 1
+  m_Weight: 30
+  m_EvadingEntity: {fileID: 0}
+  m_EvadeRadius: 5
 --- !u!1 &310829147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,19 +1350,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
       propertyPath: m_MaxSpeed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
       propertyPath: m_MaxHealth
-      value: 1000
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
       propertyPath: m_AttackRate
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
+      propertyPath: m_AttackPower
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
+      propertyPath: m_Acceleration
+      value: 9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 2123130925413106560, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
       propertyPath: m_CurrentHealth
-      value: 1000
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2123130925413106561, guid: 1e6d53d02785f5e46a8d3c18ef3509b0, type: 3}
       propertyPath: m_RootOrder

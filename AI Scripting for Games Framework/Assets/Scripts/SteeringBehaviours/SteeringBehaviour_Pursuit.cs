@@ -5,6 +5,7 @@ using UnityEngine;
 public class SteeringBehaviour_Pursuit : SteeringBehaviour
 {
     public MovingEntity m_PursuingEntity;
+    public float m_SafeDistance = 0.0f;
 
     public override Vector2 CalculateForce()
     {
@@ -12,6 +13,7 @@ public class SteeringBehaviour_Pursuit : SteeringBehaviour
         {
             // Gets the vector between the entity and the pursue target
             Vector2 pursuePositionVector = m_PursuingEntity.transform.position - transform.position;
+            pursuePositionVector = pursuePositionVector - new Vector2(m_SafeDistance, m_SafeDistance);
             // Combines the speeds of both entities (the magnitude of a velocity vector is speed)
             float combinedSpeeds = Maths.Magnitude(m_PursuingEntity.m_Velocity) + Maths.Magnitude(m_Manager.m_Entity.m_Velocity);
             // PredictionTime = distance between two entities / (they combined speeds of the entities)

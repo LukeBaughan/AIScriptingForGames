@@ -14,6 +14,8 @@ public class Player : MovingEntity
     bool m_Attacking;
 
     private float m_AttackTime;
+
+    public float m_TimeTillAtack = 0.0f;
     public float m_AttackRate = 1.0f;
 
     private float xp = 0.0f;
@@ -25,6 +27,7 @@ public class Player : MovingEntity
     public SteeringBehaviour_Manager m_SB_Manager; 
     public SteeringBehaviour_Wander m_Wander;
     public SteeringBehaviour_Pursuit m_Pursuit;
+    public SteeringBehaviour_Evade m_Evade;
 
 
     protected override void Awake()
@@ -43,21 +46,33 @@ public class Player : MovingEntity
         m_Pursuit = GetComponent<SteeringBehaviour_Pursuit>();
         if (!m_Pursuit)
             Debug.LogError("Object doesn't have a Steering Behaviour Pursuit attached", this);
+
+        m_Evade = GetComponent<SteeringBehaviour_Evade>();
+        if(!m_Evade)
+            Debug.LogError("Object doesn't have a Steering Behaviour Pursuit attached", this);
+
     }
 
     private void Start()
     {
-        InvokeRepeating("Attack", 1.0f, m_AttackRate);
+        //InvokeRepeating("Attack", 1.0f, m_AttackRate);
+
     }
 
     public void Initialise()
     {
         m_SB_Manager.m_SteeringBehaviours.Add(m_Wander);
         m_SB_Manager.m_SteeringBehaviours.Add(m_Pursuit);
+        m_SB_Manager.m_SteeringBehaviours.Add(m_Evade);
     }
 
     void Update()
     {
+        // Attacks if every "attackRate" seconds
+        m_TimeTillAtack += Time.deltaTime;
+        if (m_TimeTillAtack >= m_AttackRate)
+            Attack();
+
         m_AttackTime += Time.deltaTime;
 
         if (!m_Attacking || (m_Attacking && m_CanMoveWhileAttacking))
@@ -94,6 +109,8 @@ public class Player : MovingEntity
     {
         m_Animator.SetTrigger("Attack");
         m_Attacking = true;
+        // Resets the timer
+        m_TimeTillAtack = 0.0f;
 
         // Creates a debug box to show the weapon's radius
     }
