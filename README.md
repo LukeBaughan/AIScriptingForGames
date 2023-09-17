@@ -5,6 +5,6 @@ In this university project, I was tasked with setting up AI behaviours which cou
 <br /> I then created a foundation for simple Vampire Survivors style game, incorporating some of the AI behaviours I previously made.
 <br /> <br /> My scripts can be found in Assets->Scripts->Luke’s Scripts (All other content is provided by Staffordshire University)
 
-[Decision Making Enemy.webm](https://github.com/LukeBaughan/AIScriptingForGames/assets/43883865/66fc9b4a-0679-4a77-b8bf-b3a947226bb5)
+[Decision Making Enemy.webm](https://github.com/LukeBaughan/AIScriptingForGames/assets/43883865/01128d00-4ce2-435e-8a0b-5ab9bc267a08)
 
-[Vampire Survivors style game.webm](https://github.com/LukeBaughan/AIScriptingForGames/assets/43883865/60b06d47-a779-449a-9d18-4990d9b96326)
+[Vampire Survivors Style Game.webm](https://github.com/LukeBaughan/AIScriptingForGames/assets/43883865/2ed1db17-a0ac-41d5-bd86-6c836838b7ee)
